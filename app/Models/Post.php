@@ -7,6 +7,7 @@ use App\Models\Concerns\LogsActivityFillable;
 use App\Models\Concerns\Taggable;
 use App\Models\Enums\PostTypeEnum;
 use App\Models\Enums\StatusEnum;
+use App\Models\Scopes\IsPublished;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -42,6 +43,7 @@ class Post extends Model
         'user_id',
         'type',
         'status',
+        'publish_at',
     ];
 
     /**
@@ -103,6 +105,11 @@ class Post extends Model
                 report($e);
             }
         });
+    }
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new IsPublished);
     }
 
     /**

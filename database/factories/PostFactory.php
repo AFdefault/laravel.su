@@ -19,6 +19,7 @@ class PostFactory extends Factory
             'slug'    => function (array $attributes) {
                 return Str::slug($attributes['title']);
             },
+            'publish_at' => now()->addDay(),
         ];
     }
 }
